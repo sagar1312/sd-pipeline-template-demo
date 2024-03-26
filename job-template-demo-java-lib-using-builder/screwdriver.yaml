@@ -4,3 +4,7 @@ shared:
     environment:
         JOB_TEMPLATE_NAMESPACE: sagar1312
         JOB_TEMPLATE_NAME: sd-job-template-demo-java-lib-using-builder
+    settings:
+        email:
+          addresses: [ sagar1312@gmail.com ]
+          statuses: [SUCCESS, FAILURE]
