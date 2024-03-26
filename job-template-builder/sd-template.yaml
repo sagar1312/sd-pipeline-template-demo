@@ -27,5 +27,7 @@ config:
                 JOB_TEMPLATE_NAMESPACE: ""
                 JOB_TEMPLATE_NAME: ""
             steps:
-                -   get_latestVersion: export TEMPLATE_VERSION="$(./node_modules/.bin/template-get-version-from-tag --names ${JOB_TEMPLATE_NAMESPACE}/${JOB_TEMPLATE_NAME} --tag latest)"
-                -   set_tag: ./node_modules/.bin/template-tag --namespace ${JOB_TEMPLATE_NAMESPACE} --names ${JOB_TEMPLATE_NAMESPACE}/${JOB_TEMPLATE_NAME} --tag stable --version
+                -   get_latestVersion: |
+                        export LATEST_VERSION="$(./node_modules/.bin/template-get-version-from-tag --names ${JOB_TEMPLATE_NAMESPACE}/${JOB_TEMPLATE_NAME} --tag latest)"
+                        echo "Latest version is ${LATEST_VERSION}"
+                -   set_tag: ./node_modules/.bin/template-tag --name ${JOB_TEMPLATE_NAMESPACE}/${JOB_TEMPLATE_NAME} --tag stable --version ${LATEST_VERSION}
