@@ -1,0 +1,31 @@
+namespace: sagar1312
+name: sd-job-template-builder
+version: '1.0.0'
+description: Pipeline to validate and publish pipeline template
+maintainer: sagar1312@gmail.com
+
+config:
+    shared:
+        image: node:18
+
+    jobs:
+        validate:
+            requires: [ ~pr, ~commit ]
+            steps:
+                -   install_prerequisites: npm install screwdriver-template-main
+                -   validate_default_template: ./node_modules/.bin/pipeline-template-validate
+
+        publish:
+            requires: [ validate ]
+            steps:
+                -   install_prerequisites: npm install screwdriver-template-main
+                -   publish: ./node_modules/.bin/pipeline-template-publish
+
+        tag-as-stable:
+            requires: [ publish ]
+            environment:
+                JOB_TEMPLATE_NAMESPACE: ""
+                JOB_TEMPLATE_NAME: ""
+            steps:
+                -   get_latestVersion: export TEMPLATE_VERSION="$(./node_modules/.bin/pipeline-template-get-version-from-tag --namespace ${JOB_TEMPLATE_NAMESPACE} --name ${JOB_TEMPLATE_NAME} --tag latest)"
+                -   set_tag: ./node_modules/.bin/pipeline-template-tag --namespace ${JOB_TEMPLATE_NAMESPACE} --namespace ${JOB_TEMPLATE_NAMESPACE} --name ${JOB_TEMPLATE_NAME} --tag stable --version

@@ -1,0 +1,6 @@
+template: sagar1312/sd-job-template-builder@latest
+
+shared:
+    environment:
+        JOB_TEMPLATE_NAMESPACE: sagar1312
+        JOB_TEMPLATE_NAME: sd-job-template-demo-nodejs-lib-using-builder
