@@ -13,13 +13,13 @@ config:
             requires: [ ~pr, ~commit ]
             steps:
                 -   install_prerequisites: npm install screwdriver-template-main
-                -   validate_default_template: ./node_modules/.bin/pipeline-template-validate
+                -   validate_default_template: ./node_modules/.bin/template-validate
 
         publish:
             requires: [ validate ]
             steps:
                 -   install_prerequisites: npm install screwdriver-template-main
-                -   publish: ./node_modules/.bin/pipeline-template-publish
+                -   publish: ./node_modules/.bin/template-publish
 
         tag-as-stable:
             requires: [ publish ]
@@ -27,5 +27,5 @@ config:
                 JOB_TEMPLATE_NAMESPACE: ""
                 JOB_TEMPLATE_NAME: ""
             steps:
-                -   get_latestVersion: export TEMPLATE_VERSION="$(./node_modules/.bin/pipeline-template-get-version-from-tag --namespace ${JOB_TEMPLATE_NAMESPACE} --name ${JOB_TEMPLATE_NAME} --tag latest)"
-                -   set_tag: ./node_modules/.bin/pipeline-template-tag --namespace ${JOB_TEMPLATE_NAMESPACE} --namespace ${JOB_TEMPLATE_NAMESPACE} --name ${JOB_TEMPLATE_NAME} --tag stable --version
+                -   get_latestVersion: export TEMPLATE_VERSION="$(./node_modules/.bin/template-get-version-from-tag --names ${JOB_TEMPLATE_NAMESPACE}/${JOB_TEMPLATE_NAME} --tag latest)"
+                -   set_tag: ./node_modules/.bin/template-tag --namespace ${JOB_TEMPLATE_NAMESPACE} --names ${JOB_TEMPLATE_NAMESPACE}/${JOB_TEMPLATE_NAME} --tag stable --version
