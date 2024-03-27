@@ -1,8 +1,8 @@
-namespace: adong
+namespace: sagar1312
 name: sd-job-template-builder
 version: '1.0.0'
 description: Pipeline to validate and publish pipeline template
-maintainer: adong@yahooinc.com
+maintainer: sagar1312@gmail.com
 
 config:
     shared:
